@@ -37,6 +37,8 @@ Here is an example Revision Type tree:
 {'pending': {'suggestions': [{'uuid': 'ea750efc-c274-43f8-a003-584f5288b36d', 'text': '[S: Perhaps "thought?"]', 'index': 70}], 'revisions': [{'uuid': '3a626e37-36ee-4bc2-8626-663ad56f42b5', 'text': '[R: /on Billions/on the television show Billions/]', 'index': 1285}], 'deletions': []}, 'accepted': {'suggestions': [], 'revisions': [], 'deletions': []}}
 ```
 
+After incorporating a revision into a document, implementations MUST delete the inline revision. Implementations SHOULD remove any spaces before the deletion syntax.
+
 ### Comments
 
 To parse a comment, search for the following text in a document:
@@ -56,6 +58,18 @@ To parse a revision, search for the following text in a document:
 ```
 
 Implementations MUST enforce the `/old text/new text/` syntax with a forward slash at the beginning and end of the revision string.
+
+To identify what text to replace in a document, find the last recurring instance of `old text` up until the start of the suggestion `[R:`. Then, replace the `old text` with the `new text` in the identified instance.
+
+### Deletion
+
+To parse a deletion, search for the following text in a document:
+
+```
+[D: Text to delete]
+```
+
+The text after the colon (`:`) and before the closing square bracket `]` is the text to delete. To identify what text to replace in a document, find the last recurring instance of the text to delete up until the start of the deletion suggestion `[D:`. Then, remove the text.
 
 ## Implementations
 
