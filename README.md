@@ -31,11 +31,31 @@ Each instance of a Revision Type in the tree should contain the following pieces
 - `text`: The Revision text, in full (example: `[S: This is a suggestion]`), and;
 - `index`: The index at which the Revision text starts in the document.
 
+Here is an example Revision Type tree:
+
+```
+{'pending': {'suggestions': [{'uuid': 'ea750efc-c274-43f8-a003-584f5288b36d', 'text': '[S: Perhaps "thought?"]', 'index': 70}], 'revisions': [{'uuid': '3a626e37-36ee-4bc2-8626-663ad56f42b5', 'text': '[R: /on Billions/on the television show Billions/]', 'index': 1285}], 'deletions': []}, 'accepted': {'suggestions': [], 'revisions': [], 'deletions': []}}
+```
+
 ### Comments
 
 To parse a comment, search for the following text in a document:
 
-- `[S: ]`:
+```
+[S: This is a comment.]
+```
+
+The text after the colon (`:`) and before the closing square bracket `]` is the comment.
+
+### Revision
+
+To parse a revision, search for the following text in a document:
+
+```
+[R: /old text/new text/]
+```
+
+Implementations MUST enforce the `/old text/new text/` syntax with a forward slash at the beginning and end of the revision string.
 
 ## Implementations
 
